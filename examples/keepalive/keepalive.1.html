@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>keepalive测试</title>
+    <style>
+        body {
+            background: rgba(30, 30, 30, 1);
+            color: wheat;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">挂载节点</div>
+</body>
+<script src="../../dist/vue.js"></script>
+<script type="module">
+    // import Vue from '../vue.js';
+    const comp1 = {
+        beforeCreate() {
+            console.log('comp1 beforeCreate');
+        },
+        created() {
+            console.log('comp1 created');
+        },
+        render: h => h('div', '组件1'),
+        beforeUpdate () {
+            console.log('comp1 beforeUpdate');
+        },
+        updated() {
+            console.log('comp1 updated');
+        },
+        activated() {
+            console.log('comp1 activated');
+        },
+        deactivated() {
+            console.log('comp1 deactivated');
+        },
+        beforeDestroy() {
+            console.log('comp1 beforeDestroy');
+        },
+        destroyed() {
+            console.log('comp1 destroyed');
+        }
+    };
+    const comp2 = {
+        beforeCreate() {
+            console.log('comp2 beforeCreate');
+        },
+        created() {
+            console.log('comp2 created');
+        },
+        render: h => h('div', '组件2'),
+        beforeUpdate() {
+            console.log('comp2 beforeUpdate');
+        },
+        updated() {
+            console.log('comp2 updated');
+        },
+        activated() {
+            console.log('comp2 activated');
+        },
+        deactivated() {
+            console.log('comp2 deactivated');
+        },
+        beforeDestroy() {
+            console.log('comp2 beforeDestroy');
+        },
+        destroyed() {
+            console.log('comp2 destroyed');
+        }
+    }
+    window.app = new Vue({
+        data() {
+            return {
+                comp: 'comp1'
+            }
+        },
+        // <keep-alive>
+        template: `
+                <keep-alive>
+                    <component :is="comp"></component>
+                </keep-alive>
+        `,
+        components: {
+            comp1: comp1,
+            comp2: comp2,
+        }
+    }).$mount('#app');
+</script>
+<script>
+</script>
+
+</html>

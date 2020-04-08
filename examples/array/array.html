@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>key测试</title>
+    <style>
+        body {
+            background: rgba(30, 30, 30);
+            color: wheat;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">挂载节点</div>
+</body>
+<script src="../../dist/vue.js"></script>
+<script type="module">
+    // import Vue from '../vue.js';
+    window.app = new Vue({
+        data() {
+            return {
+                list: [
+                    'A',
+                    'B'
+                ]
+            }
+        },
+
+        render: function (createElement) {
+            console.log('根组件->render');
+            return createElement('div', {
+                attrs: {
+                    id: 'render',
+                },
+            }, this.list.map((item, index) => {
+                return createElement('div', {
+                }, item);
+            }));
+        },
+    }).$mount('#app');
+</script>
+<script>
+</script>
+
+</html>

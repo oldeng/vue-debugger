@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>props测试</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="app">挂载节点</div>
+</body>
+<script src="../../dist/vue.js"></script>
+<script type="module">
+    const comp1 = {
+        props: {
+            obj: {
+                type: Object,
+                default: {},
+                required: true,
+            },
+        },
+        render: function (createElement) {
+            return createElement('div', {
+                style: {
+                    color: 'white'
+                }
+            }, [
+                this.obj.a,
+                this.obj.b,
+                this.obj.c.d,
+                this.obj.c.e
+            ]);
+        },
+        created() {
+            console.log('comp1 created');
+        },
+    };
+    //全局mixin
+    window.app = new Vue({
+        data() {
+            return {
+                obj: {
+                    a: 1,
+                    b: 'b',
+                    c: {
+                        d: 1,
+                        e: 'e'
+                    }
+                }
+            }
+        },
+        watch: {
+            obj: {
+                handler: function (newVal, oldVal) {
+                    console.log('newVal = ', newVal);
+                    debugger;
+                },
+                deep: true
+            }
+        },
+        created() {
+            console.log('根组件->created');
+        },
+        render: function (createElement) {
+            console.log('根组件->render');
+            return createElement('div', {
+                attrs: {
+                    id: 'render'
+                }
+            }, [
+                createElement(comp1, {
+                    props: {
+                        obj: this.obj
+                    }
+                })
+            ]);
+        },
+        components: {
+            comp1: comp1
+        }
+    }).$mount('#app');
+</script>
+<script>
+</script>
+
+</html>
